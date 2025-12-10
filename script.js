@@ -6,11 +6,16 @@ function calcularFactorial(numero) {
         return 1;
     }
     
-    let factorial = 1;
+    let factorial = {resultado: 1, process: ""};
     for (let i = 1; i <= numero; i++) {
-        factorial *= i; 
+        if(i == numero) {
+            factorial.process += `${i}`
+        } else {
+            factorial.process += `${i} * `
+        }
+        factorial.resultado *= i; 
     }
-    
+    factorial.resultado = factorial.resultado.toLocaleString('es-ES');
     return factorial;
 }
 const inputFactorial = document.getElementById('Factorial');
@@ -21,13 +26,15 @@ inputFactorial.addEventListener('input', (event) => {
         const resultado = calcularFactorial(numero);
         const nuevaEntrada = document.createElement('p');
         let textoFactorial = '';
+        console.log(resultado);
+        
         if (typeof resultado === 'number') {
-            textoFactorial = `${numero}! = ${resultado}`;
+            textoFactorial = `<strong>${numero}! </strong> = ${resultado.factorial}`;
         } else {
-            textoFactorial = `${numero}! = ${resultado}`;
+            textoFactorial = `<strong>${numero}! </strong> (${resultado.process}) = ${resultado.resultado}`;
         }
         
-        nuevaEntrada.textContent = textoFactorial;
+        nuevaEntrada.innerHTML = textoFactorial;
         
         if (listadoFactorial.firstChild) {
             listadoFactorial.insertBefore(nuevaEntrada, listadoFactorial.firstChild);
